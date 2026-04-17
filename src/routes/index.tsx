@@ -103,15 +103,15 @@ function Hero() {
         </div>
       </div>
 
-      {/* Marquee */}
+      {/* Marquee — track needs w-max so translateX(-50%) is half the duplicated content, not half the viewport */}
       <div className="absolute bottom-8 md:bottom-12 left-0 right-0 z-20 overflow-hidden pointer-events-none">
-        <div className="flex animate-marquee whitespace-nowrap will-change-transform">
+        <div className="flex w-max max-w-none flex-nowrap animate-marquee will-change-transform">
           {Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className="flex shrink-0 items-center">
+            <div key={i} className="flex shrink-0 flex-nowrap items-center">
               {["Creative Director", "Content Strategist", "Visual Storyteller"].map((word, j) => (
                 <span
                   key={`${i}-${j}`}
-                  className="font-display text-[16vw] md:text-[12vw] leading-[0.95] font-semibold text-white px-8"
+                  className="whitespace-nowrap font-display text-[11vw] md:text-[12vw] leading-[0.95] font-semibold text-white px-6 md:px-8"
                 >
                   {word}
                   <span className="text-white/45"> · </span>
