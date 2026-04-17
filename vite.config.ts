@@ -6,4 +6,11 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+export default defineConfig({
+  vite: {
+    server: {
+      // Avoid clashing with another local app on 8080 (Lovable/TanStack default).
+      port: 5173,
+    },
+  },
+});

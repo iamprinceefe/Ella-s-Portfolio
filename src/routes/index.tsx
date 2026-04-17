@@ -70,7 +70,7 @@ function Hero() {
         <img
           src={heroPortrait}
           alt="Ella Roli, Creative Director, portrait against an olive backdrop"
-          className="h-full w-full object-cover object-[70%_center] md:object-[75%_center]"
+          className="h-full w-full object-cover object-[70%_32%] md:object-[75%_center]"
         />
         {/* Olive overlay for legibility */}
         <div
@@ -85,8 +85,8 @@ function Hero() {
 
       <Nav />
 
-      {/* Left text */}
-      <div className="relative z-20 mx-auto flex h-full max-w-7xl items-center px-6 md:px-12">
+      {/* Left text — bottom-aligned on small screens so copy doesn’t sit over the portrait */}
+      <div className="relative z-20 mx-auto flex h-full max-w-7xl items-end pb-32 md:items-center md:pb-0 px-6 md:px-12">
         <div className="max-w-xl animate-fade-up">
           <p className="text-cream text-lg md:text-xl leading-relaxed font-light">
             I build brands and digital experiences from the ground up — transforming vision
@@ -111,10 +111,10 @@ function Hero() {
               {["Creative Director", "Content Strategist", "Visual Storyteller"].map((word, j) => (
                 <span
                   key={`${i}-${j}`}
-                  className="font-display text-[16vw] md:text-[12vw] leading-[0.95] font-semibold text-cream/15 px-8"
+                  className="font-display text-[16vw] md:text-[12vw] leading-[0.95] font-semibold text-white px-8"
                 >
                   {word}
-                  <span className="text-accent-amber/40"> · </span>
+                  <span className="text-white/45"> · </span>
                 </span>
               ))}
             </div>
@@ -383,7 +383,8 @@ function Contact() {
   );
 }
 
-function Index() {
+// Exporting skips fragile path-based code-split `import()` (breaks when the folder path contains `'`)
+export function Index() {
   return (
     <main className="min-h-screen bg-background">
       <Hero />
