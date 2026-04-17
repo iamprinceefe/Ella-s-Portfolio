@@ -1,17 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import heroPortrait from "@/assets/hero-portrait.jpg";
+import cciLogo from "@/assets/cci-logo.jpg";
+import japaLogo from "@/assets/japa-logo.jpg";
+import chronicleFeather from "@/assets/chronicle-feather.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Eli — Creative Director, Content Strategist & Visual Storyteller" },
+      { title: "Ella Roli — Creative Director, Content Strategist & Visual Storyteller" },
       {
         name: "description",
         content:
-          "Portfolio of a Creative Director and Visual Storyteller building brands, campaigns, and short-form content that drive measurable growth.",
+          "Portfolio of Ella Roli, Creative Director and Visual Storyteller building brands, campaigns, and short-form content that drive measurable growth.",
       },
-      { property: "og:title", content: "Eli — Creative Director & Visual Storyteller" },
+      { property: "og:title", content: "Ella Roli — Creative Director & Visual Storyteller" },
       {
         property: "og:description",
         content:
@@ -48,7 +51,7 @@ function Nav() {
   return (
     <nav className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-6 py-6 md:px-12 md:py-8">
       <a href="#top" className="font-display text-xl text-cream tracking-tight">
-        Eli<span className="text-accent-amber">.</span>
+        Ella Roli<span className="text-accent-amber">.</span>
       </a>
       <div className="hidden md:flex items-center gap-10 text-sm text-cream/80 uppercase tracking-[0.2em]">
         <a href="#about" className="hover:text-cream transition-colors">About</a>
@@ -66,7 +69,7 @@ function Hero() {
       <div className="absolute inset-0">
         <img
           src={heroPortrait}
-          alt="Creative Director portrait against an olive backdrop"
+          alt="Ella Roli, Creative Director, portrait against an olive backdrop"
           className="h-full w-full object-cover object-[70%_center] md:object-[75%_center]"
         />
         {/* Olive overlay for legibility */}
@@ -85,9 +88,6 @@ function Hero() {
       {/* Left text */}
       <div className="relative z-20 mx-auto flex h-full max-w-7xl items-center px-6 md:px-12">
         <div className="max-w-xl animate-fade-up">
-          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-accent-amber">
-            Portfolio · 2026
-          </p>
           <p className="text-cream text-lg md:text-xl leading-relaxed font-light">
             I build brands and digital experiences from the ground up — transforming vision
             into compelling campaigns, short-form content, and storytelling systems that
@@ -163,20 +163,6 @@ function About() {
             brand's voice or directing on screen, I focus on delivering experiences that
             resonate and leave a lasting impression.
           </p>
-          <div className="grid grid-cols-2 gap-8 pt-8 border-t border-border">
-            <div>
-              <p className="font-display text-3xl text-foreground">05+</p>
-              <p className="mt-1 text-sm text-muted-foreground uppercase tracking-wider">
-                Years of craft
-              </p>
-            </div>
-            <div>
-              <p className="font-display text-3xl text-foreground">20+</p>
-              <p className="mt-1 text-sm text-muted-foreground uppercase tracking-wider">
-                Brands shaped
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -189,6 +175,11 @@ type Project = {
   category: string;
   description: string;
   outcomes: string[];
+  link: string;
+  linkLabel: string;
+  image: string;
+  imageBg?: string;
+  imageFit?: "cover" | "contain";
 };
 
 const projects: Project[] = [
@@ -203,6 +194,11 @@ const projects: Project[] = [
       "Created viral short-form content",
       "Built a consistent, engaging brand presence",
     ],
+    link: "https://www.instagram.com/cci_hamilton?igsh=MWl0anowcmRuOXVsYQ==",
+    linkLabel: "View on Instagram",
+    image: cciLogo,
+    imageBg: "#c8202a",
+    imageFit: "contain",
   },
   {
     index: "02",
@@ -215,10 +211,32 @@ const projects: Project[] = [
       "Increased audience engagement",
       "Delivered consistent, high-quality storytelling",
     ],
+    link: "https://www.instagram.com/justanotherpersonabroad?igsh=MTNucHcyMnkxNWxqcg==",
+    linkLabel: "View on Instagram",
+    image: japaLogo,
+    imageBg: "#f4f1ec",
+    imageFit: "contain",
+  },
+  {
+    index: "03",
+    title: "Chronicle Minds",
+    category: "Writing · Editorial",
+    description:
+      "A writing project exploring ideas, reflections, and stories — built as a home for long-form thought and editorial voice. Curated and shaped to invite readers into considered, meaningful narratives.",
+    outcomes: [
+      "Published a body of original writing",
+      "Established a distinct editorial voice",
+      "Built a digital home for long-form work",
+    ],
+    link: "https://chroniclesminds.wixsite.com/roliqueminds",
+    linkLabel: "Visit the site",
+    image: chronicleFeather,
+    imageBg: "#e8f1ee",
+    imageFit: "contain",
   },
 ];
 
-function ProjectCard({ project, image }: { project: Project; image: string }) {
+function ProjectCard({ project }: { project: Project }) {
   const { ref, shown } = useReveal<HTMLElement>();
   return (
     <article
@@ -227,12 +245,17 @@ function ProjectCard({ project, image }: { project: Project; image: string }) {
         shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
       }`}
     >
-      <div className="md:col-span-5 relative overflow-hidden rounded-md bg-muted">
-        <div className="aspect-[4/5] overflow-hidden">
+      <div
+        className="md:col-span-5 relative overflow-hidden rounded-md"
+        style={{ backgroundColor: project.imageBg ?? "var(--muted)" }}
+      >
+        <div className="aspect-[4/5] overflow-hidden flex items-center justify-center p-8">
           <img
-            src={image}
+            src={project.image}
             alt={project.title}
-            className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+            className={`h-full w-full transition-transform duration-[1200ms] ease-out group-hover:scale-105 ${
+              project.imageFit === "contain" ? "object-contain" : "object-cover"
+            }`}
           />
         </div>
         <div className="absolute top-4 left-4 rounded-full bg-cream/90 backdrop-blur px-3 py-1 text-xs uppercase tracking-[0.2em] text-ink">
@@ -261,6 +284,15 @@ function ProjectCard({ project, image }: { project: Project; image: string }) {
             </li>
           ))}
         </ul>
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 inline-flex items-center gap-3 self-start text-sm uppercase tracking-[0.2em] text-foreground border-b border-foreground/30 pb-1 transition-all duration-300 hover:gap-5 hover:border-foreground"
+        >
+          {project.linkLabel}
+          <span aria-hidden>→</span>
+        </a>
       </div>
     </article>
   );
@@ -283,8 +315,9 @@ function Work() {
             A selection of brand, content, and storytelling work — built to move audiences.
           </p>
         </div>
-        <ProjectCard project={projects[0]} image={heroPortrait} />
-        <ProjectCard project={projects[1]} image={heroPortrait} />
+        {projects.map((p) => (
+          <ProjectCard key={p.index} project={p} />
+        ))}
       </div>
     </section>
   );
@@ -302,26 +335,47 @@ function Contact() {
         </h2>
         <div className="mt-12 flex flex-col md:flex-row md:items-center gap-6">
           <a
-            href="mailto:hello@example.com"
+            href="mailto:emmanuellaroli@gmail.com"
             className="inline-flex items-center gap-3 rounded-full bg-accent-amber px-8 py-4 text-sm uppercase tracking-[0.2em] text-olive-deep transition-all duration-300 hover:gap-5"
           >
             Start a project
             <span aria-hidden>→</span>
           </a>
           <a
-            href="mailto:hello@example.com"
+            href="mailto:emmanuellaroli@gmail.com"
             className="text-cream/80 hover:text-cream underline-offset-4 hover:underline transition"
           >
-            hello@example.com
+            emmanuellaroli@gmail.com
           </a>
         </div>
 
         <div className="mt-24 flex flex-col md:flex-row justify-between gap-6 border-t border-cream/15 pt-8 text-sm text-cream/60">
-          <span>© {new Date().getFullYear()} Eli. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Ella Roli. All rights reserved.</span>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-cream transition-colors">Instagram</a>
-            <a href="#" className="hover:text-cream transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-cream transition-colors">Vimeo</a>
+            <a
+              href="https://www.instagram.com/ellaroli_?igsh=d2hoeWR6MWZxajJw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cream transition-colors"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ellaroli"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cream transition-colors"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://substack.com/@dikaiosofabba"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cream transition-colors"
+            >
+              Substack
+            </a>
           </div>
         </div>
       </div>
